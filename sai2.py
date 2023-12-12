@@ -1,4 +1,5 @@
 import os
+import shutil
 
 class FileSystem:
     def current_directory(self):
@@ -43,10 +44,11 @@ class FileSystem:
         with open(file_path, 'r') as f:
             print(f.read())
     
-    def rm(self, path):
+    def rm(self, path, rf_flag=False):
         if os.path.exists(path):
             if(os.path.isdir(path)):
-                os.rmdir(path)
+                if(rf_flag): os.rmdir(path)
+                else: print("rm: cannot remove '"+path+"': Is a directory")
             else:
                 os.remove(path)
         else:
@@ -60,3 +62,12 @@ class FileSystem:
             fileName = source_path.split('/')[-1]
             destination_path = destination_path + '/' + fileName
         os.rename(source_path, destination_path)
+    
+    def cp(self, source_path, destination_path):
+        if os.path.isdir(source_path) and not os.path.isdir(destination_path):
+            print("cp: cannot overwrite non-directory '" + destination_path + "' with directory '"+source_path+"'")
+            return
+        if os.path.isdir(destination_path):
+            fileName = source_path.split('/')[-1]
+            destination_path = destination_path + '/' + fileName
+        shutil.copy(source_path, destination_path)

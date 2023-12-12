@@ -61,12 +61,23 @@ def main():
             file_system.cat(file_path)
         
         elif command.startswith('rm'):
-            _, path = command.split(' ', 1)
-            file_system.rm(path)
+            _, rest = command.split(' ', 1)
+            if '-rf' in rest:
+                _, path = rest.split(' ', 1)
+                file_system.rm(path, True)
+            else:
+                file_system.rm(rest)
         
         elif command.startswith('mv '):
             _, source_path, destination_path = command.split(' ')
             file_system.mv(source_path, destination_path)
+            
+        elif command.startswith('cp '):
+            _, source_path, destination_path = command.split(' ')
+            file_system.cp(source_path, destination_path)
+        
+        elif command == 'pwd':
+            print(file_system.current_directory())
         
         elif command == 'exit':
             break
