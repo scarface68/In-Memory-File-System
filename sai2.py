@@ -1,5 +1,6 @@
 import os
 import shutil
+from distutils.dir_util import copy_tree
 
 class FileSystem:
     def current_directory(self):
@@ -64,9 +65,28 @@ class FileSystem:
         os.rename(source_path, destination_path)
     
     def cp(self, source_path, destination_path):
-        if os.path.isdir(source_path) and not os.path.isdir(destination_path):
+        if(not os.path.exists(source_path)):
+            print("cp: cannot stat '"+source_path+"': No such file or directory")
+            return
+        if os.path.isdir(source_path) and os.path.exists(destination_path) and not os.path.isdir(destination_path):
             print("cp: cannot overwrite non-directory '" + destination_path + "' with directory '"+source_path+"'")
             return
+        elif source_path == destination_path:
+            if(os.path.isdir(source_path)):
+                folderName = source_path.split('/')[-1]
+                print("cp: cannot copy a directory, '"+source_path+"', into itself, '"+source_path+folderName+"'")
+                return
+            else: print("cp: '" + source_path + "' and '"+destination_path+"' are the same file")
+            return
+        
+        if os.path.isdir(source_path):
+            if(os.path.exists(destination_path)):
+                folderName = source_path.split('/')[-1]
+                destination_path = destination_path + '/' + folderName
+                shutil.copytree(source_path, destination_path, dirs_exist_ok=True)
+            else: shutil.copytree(source_path, destination_path)
+            return
+        
         if os.path.isdir(destination_path):
             fileName = source_path.split('/')[-1]
             destination_path = destination_path + '/' + fileName
