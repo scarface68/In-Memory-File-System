@@ -30,5 +30,11 @@ class FileSystem:
         with open(file_path, 'r') as f:
             print(f.read())
     
-    def rm(self, file_path):
-        os.remove(file_path)
+    def rm(self, path):
+        if os.path.exists(path):
+            if(os.path.isdir(path)):
+                os.rmdir(path)
+            else:
+                os.remove(path)
+        else:
+            print("The file or directory does not exist")
