@@ -138,14 +138,3 @@ cmake_install.cmake
 compile_commands.json
 Makefile
 Testing/
-
-# Poetry
-#   According to pypa/poetry#1915, it is recommended to include poetry.lock in version control.
-#   However, in case of collaboration, if having poetry.lock present causes issues, the file
-#   can be deleted before running `poetry install`.
-#poetry.lock
-
-# Pylance (https://github.com/microsoft/pylance-release)
-#   Pylance is an optional plugin for Visual Studio Code that provides enhanced Python language features.
-#   Pylance depends on the Pyright static type checking tool to provide its features.
-#.pyrightconfig.json
