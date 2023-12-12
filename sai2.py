@@ -53,4 +53,10 @@ class FileSystem:
             print("No such file or directory")
     
     def mv(self, source_path, destination_path):
+        if os.path.isdir(source_path) and not os.path.isdir(destination_path):
+            print("mv: cannot overwrite non-directory '" + destination_path + "' with directory '"+source_path+"'")
+            return
+        if os.path.isdir(destination_path):
+            fileName = source_path.split('/')[-1]
+            destination_path = destination_path + '/' + fileName
         os.rename(source_path, destination_path)

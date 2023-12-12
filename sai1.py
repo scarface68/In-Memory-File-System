@@ -66,7 +66,6 @@ def main():
         
         elif command.startswith('mv '):
             _, source_path, destination_path = command.split(' ')
-            print(source_path, destination_path)
             file_system.mv(source_path, destination_path)
         
         elif command == 'exit':
