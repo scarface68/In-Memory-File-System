@@ -8,6 +8,9 @@ class FileSystem:
         os.mkdir(directory_name)
     
     def cd(self, path):
+        if not os.path.exists(path):
+            print("No such file or directory")
+            return
         if path == '~':
             os.chdir('/')
         else:
@@ -16,6 +19,9 @@ class FileSystem:
     def ls(self, all_flag, path):
         if not path:
             path = self.current_directory()
+        elif not os.path.exists(path):
+            print("No such file or directory")
+            return
         items = os.listdir(path)
         if not all_flag:
             items = [item for item in items if not item.startswith('.')]
@@ -24,12 +30,16 @@ class FileSystem:
     def touch(self, file_name):
         open(file_name, 'a').close()
     
+    # handle if file does not exist
     def echo(self, lines, file_path, append=False):
         with open(file_path, 'a' if append else 'w') as f:
              for line in lines:
                 f.write(line + '\n')
     
     def cat(self, file_path):
+        if not os.path.exists(file_path):
+            print("No such file or directory")
+            return
         with open(file_path, 'r') as f:
             print(f.read())
     
@@ -40,7 +50,7 @@ class FileSystem:
             else:
                 os.remove(path)
         else:
-            print("The file or directory does not exist")
+            print("No such file or directory")
     
     def mv(self, source_path, destination_path):
         os.rename(source_path, destination_path)

@@ -28,8 +28,7 @@ def main():
                     file_system.ls(all_flag, path)
                 else:
                     path = rest
-                    file_system.ls(all_flag, path)
-                    
+                    file_system.ls(all_flag, path)                    
         
         elif command.startswith('touch '):
             _, file_names = command.split(' ', 1)
@@ -62,8 +61,8 @@ def main():
             file_system.cat(file_path)
         
         elif command.startswith('rm'):
-            _, file_path = command.split(' ', 1)
-            file_system.rm(file_path)
+            _, path = command.split(' ', 1)
+            file_system.rm(path)
         
         elif command.startswith('mv '):
             _, source_path, destination_path = command.split(' ')
