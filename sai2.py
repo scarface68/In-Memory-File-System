@@ -13,10 +13,13 @@ class FileSystem:
         else:
             os.chdir(path)
     
-    def ls(self, path=''):
+    def ls(self, all_flag, path):
         if not path:
             path = self.current_directory()
-        print(os.listdir(path))
+        items = os.listdir(path)
+        if not all_flag:
+            items = [item for item in items if not item.startswith('.')]
+        print(' '.join(items))
     
     def touch(self, file_name):
         open(file_name, 'a').close()
@@ -38,3 +41,6 @@ class FileSystem:
                 os.remove(path)
         else:
             print("The file or directory does not exist")
+    
+    def mv(self, source_path, destination_path):
+        os.rename(source_path, destination_path)

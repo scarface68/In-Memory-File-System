@@ -15,11 +15,21 @@ def main():
             file_system.cd(path)
         
         elif command.startswith('ls'):
-            if len(command.split()) > 1:
-                _, path = command.split(' ', 1)
-                file_system.ls(path)
+            all_flag = False
+            path=None
+            if(len(command.split()) == 1):
+                file_system.ls(all_flag, path)
             else:
-                file_system.ls()
+                _, rest = command.split(' ', 1)
+                if '-a' in rest.split():
+                    all_flag = True
+                    if len(rest.split()) > 1:
+                        path = rest.split()[1]
+                    file_system.ls(all_flag, path)
+                else:
+                    path = rest
+                    file_system.ls(all_flag, path)
+                    
         
         elif command.startswith('touch '):
             _, file_names = command.split(' ', 1)
@@ -54,6 +64,11 @@ def main():
         elif command.startswith('rm'):
             _, file_path = command.split(' ', 1)
             file_system.rm(file_path)
+        
+        elif command.startswith('mv '):
+            _, source_path, destination_path = command.split(' ')
+            print(source_path, destination_path)
+            file_system.mv(source_path, destination_path)
         
         elif command == 'exit':
             break
