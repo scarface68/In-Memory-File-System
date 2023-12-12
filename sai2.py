@@ -64,10 +64,14 @@ class FileSystem:
             destination_path = destination_path + '/' + fileName
         os.rename(source_path, destination_path)
     
-    def cp(self, source_path, destination_path):
+    def cp(self, source_path, destination_path, flag):
         if(not os.path.exists(source_path)):
             print("cp: cannot stat '"+source_path+"': No such file or directory")
             return
+        if(not flag and os.path.isdir(source_path)):
+            print("cp: -r not specified; omitting directory '"+source_path+"'")
+            return
+            
         if os.path.isdir(source_path) and os.path.exists(destination_path) and not os.path.isdir(destination_path):
             print("cp: cannot overwrite non-directory '" + destination_path + "' with directory '"+source_path+"'")
             return

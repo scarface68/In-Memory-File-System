@@ -73,8 +73,12 @@ def main():
             file_system.mv(source_path, destination_path)
             
         elif command.startswith('cp '):
-            _, source_path, destination_path = command.split(' ')
-            file_system.cp(source_path, destination_path)
+            if '-r' in command or '-R' in command:
+                _, flag, source_path, destination_path = command.split(' ')
+                file_system.cp(source_path, destination_path, True)
+            else:
+                _, source_path, destination_path = command.split(' ')
+                file_system.cp(source_path, destination_path, False)
         
         elif command == 'pwd':
             print(file_system.current_directory())
