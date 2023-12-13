@@ -1,10 +1,9 @@
 import sai2
 
 def main():    
-    file_system = sai2.FileSystem()
-    
+    file_system = sai2.FileSystem()    
+    file_system.clear()
     while True:
-        file_system.clear()
         command = input(f'{file_system.current_directory()}$ ')
     
         if command.startswith('mkdir '):
@@ -81,6 +80,18 @@ def main():
                 _, source_path, destination_path = command.split(' ')
                 file_system.cp(source_path, destination_path, False)
         
+        elif command.startswith('grep '):
+            rest, file_path = command.rsplit(maxsplit=1)
+            start_quote_index = rest.find('"')
+            end_quote_index = rest.rfind('"')
+            if start_quote_index == -1 or end_quote_index == -1:
+                print("PLease put the pattern in double quotes")
+                continue
+            pattern = rest[start_quote_index + 1:end_quote_index]
+            _,options = rest[:start_quote_index].split(' ', 1)
+            options = options.split()        
+            file_system.grep(file_path, pattern, not '-i' in options, '-w' in options, '-c' in options)
+
         elif command=='clear':
             file_system.clear()
         

@@ -98,3 +98,45 @@ class FileSystem:
             fileName = source_path.split('/')[-1]
             destination_path = destination_path + '/' + fileName
         shutil.copy(source_path, destination_path)
+    
+    def grep(self, file_path, pattern, case_sensitive, whole_words, count_flag):
+        if not os.path.exists(file_path):
+            print(f"grep: {file_path}: No such file or directory")
+            return
+        # Open the file in read mode
+        with open(file_path, 'r') as file:
+            # Read the contents of the file
+            contents = file.readlines()
+
+        # Initialize counter variable
+        counter = 0
+
+        # Iterate over each line in the contents
+        for line in contents:
+            # Check if the pattern is found in the line
+            if case_sensitive:
+                if whole_words:
+                    if f" {pattern.strip()} " in f" {line.strip()} ":
+                        if not count_flag:
+                            print(line)
+                        counter += 1
+                else:
+                    if pattern in line:
+                        if not count_flag:
+                            print(line)
+                        counter += 1
+            else:
+                if whole_words:
+                    if f" {pattern.lower().strip()} " in f" {line.lower().strip()} ":
+                        if not count_flag:
+                            print(line)
+                        counter += 1
+                else:
+                    if pattern.lower() in line.lower():
+                        if not count_flag:
+                            print(line)
+                        counter += 1
+
+        # Print counter variable if count_flag is True
+        if count_flag:
+            print(counter)
