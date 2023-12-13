@@ -49,7 +49,7 @@ Operations Implemented
 - rm (add -rf flag to remove directories)
 - mv
 - cp (add -r or -R flag to copy directories)
-- grep (**Bonus**: added -i, -w, and -c flag. The flags are used to ignore case, match whole words and print only count of occurence respectively)
+- grep (**Bonus**: added -i, -w, and -c flag. The flags are used to ignore case, match whole words and print only count of occurrence respectively)
 - clear (nobody likes a messy terminal)
 - pwd
 - exit (exit code to break the infinite loop)
