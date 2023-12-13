@@ -4,6 +4,7 @@ def main():
     file_system = sai2.FileSystem()
     
     while True:
+        file_system.clear()
         command = input(f'{file_system.current_directory()}$ ')
     
         if command.startswith('mkdir '):
@@ -80,7 +81,7 @@ def main():
                 _, source_path, destination_path = command.split(' ')
                 file_system.cp(source_path, destination_path, False)
         
-        elif command.startswith('clear'):
+        elif command=='clear':
             file_system.clear()
         
         elif command == 'pwd':
