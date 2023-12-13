@@ -6,6 +6,9 @@ class FileSystem:
     def current_directory(self):
         return os.getcwd()
     
+    def clear(self):
+        os.system('cls||clear')
+    
     def mkdir(self, directory_name):
         os.mkdir(directory_name)
     

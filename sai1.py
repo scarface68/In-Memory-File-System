@@ -80,6 +80,9 @@ def main():
                 _, source_path, destination_path = command.split(' ')
                 file_system.cp(source_path, destination_path, False)
         
+        elif command.startswith('clear'):
+            file_system.clear()
+        
         elif command == 'pwd':
             print(file_system.current_directory())
         
