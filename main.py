@@ -1,7 +1,7 @@
-import sai2
+import filesystemclass
 
 def main():    
-    file_system = sai2.FileSystem()    
+    file_system = filesystemclass.FileSystem()    
     file_system.clear()
     while True:
         command = input(f'{file_system.current_directory()}$ ')

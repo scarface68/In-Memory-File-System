@@ -1,6 +1,5 @@
 import os
 import shutil
-from distutils.dir_util import copy_tree
 
 class FileSystem:
     def current_directory(self):
