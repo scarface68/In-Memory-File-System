@@ -6,21 +6,21 @@ class FileSystem:
         return os.getcwd()
     
     def clear(self):
-        os.system('cls||clear')
+       return os.system('cls||clear')
     
     def mkdir(self, directory_name):
-        os.mkdir(directory_name)
+       return os.mkdir(directory_name)
     
     def cd(self, path):
         if not os.path.exists(path):
             print("No such file or directory")
             return
         if path == '~':
-            os.chdir('/')
+           return os.chdir('/')
         else:
-            os.chdir(path)
+           return os.chdir(path)
     
-    def ls(self, all_flag, path):
+    def ls(self, all_flag=False, path=None):
         if not path:
             path = self.current_directory()
         elif not os.path.exists(path):
@@ -29,33 +29,34 @@ class FileSystem:
         items = os.listdir(path)
         if not all_flag:
             items = [item for item in items if not item.startswith('.')]
-        print(' '.join(items))
+        return items
     
     def touch(self, file_name):
-        open(file_name, 'a').close()
+       return open(file_name, 'a').close()
     
     # handle if file does not exist
     def echo(self, lines, file_path, append=False):
         with open(file_path, 'a' if append else 'w') as f:
              for line in lines:
                 f.write(line + '\n')
+        return lines
     
     def cat(self, file_path):
         if not os.path.exists(file_path):
             print("No such file or directory")
             return
         with open(file_path, 'r') as f:
-            print(f.read())
+            return f.read()
     
     def rm(self, path, rf_flag=False):
         if os.path.exists(path):
             if(os.path.isdir(path)):
-                if(rf_flag): os.rmdir(path)
-                else: print("rm: cannot remove '"+path+"': Is a directory")
+                if(rf_flag): return shutil.rmtree(path, ignore_errors=False, onerror=None)
+                else: return print("rm: cannot remove '"+path+"': Is a directory")
             else:
-                os.remove(path)
+               return os.remove(path)
         else:
-            print("No such file or directory")
+           return print("No such file or directory")
     
     def mv(self, source_path, destination_path):
         if os.path.isdir(source_path) and not os.path.isdir(destination_path):
@@ -98,7 +99,7 @@ class FileSystem:
             destination_path = destination_path + '/' + fileName
         shutil.copy(source_path, destination_path)
     
-    def grep(self, file_path, pattern, case_sensitive, whole_words, count_flag):
+    def grep(self, file_path, pattern, case_sensitive=True, whole_words=False, count_flag=False):
         if not os.path.exists(file_path):
             print(f"grep: {file_path}: No such file or directory")
             return
@@ -138,4 +139,4 @@ class FileSystem:
 
         # Print counter variable if count_flag is True
         if count_flag:
-            print(counter)
+            return counter

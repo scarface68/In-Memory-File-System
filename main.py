@@ -18,17 +18,17 @@ def main():
             all_flag = False
             path=None
             if(len(command.split()) == 1):
-                file_system.ls(all_flag, path)
+                print(' '.join(file_system.ls(all_flag, path)))
             else:
                 _, rest = command.split(' ', 1)
                 if '-a' in rest.split():
                     all_flag = True
                     if len(rest.split()) > 1:
                         path = rest.split()[1]
-                    file_system.ls(all_flag, path)
+                    print(' '.join(file_system.ls(all_flag, path)))
                 else:
                     path = rest
-                    file_system.ls(all_flag, path)                    
+                    print(' '.join(file_system.ls(all_flag, path)))                    
         
         elif command.startswith('touch '):
             _, file_names = command.split(' ', 1)
@@ -58,7 +58,7 @@ def main():
         
         elif command.startswith('cat '):
             _, file_path = command.split(' ', 1)
-            file_system.cat(file_path)
+            print(file_system.cat(file_path))
         
         elif command.startswith('rm'):
             _, rest = command.split(' ', 1)
@@ -85,12 +85,13 @@ def main():
             start_quote_index = rest.find('"')
             end_quote_index = rest.rfind('"')
             if start_quote_index == -1 or end_quote_index == -1:
-                print("PLease put the pattern in double quotes")
+                print("Please put the pattern in double quotes")
                 continue
             pattern = rest[start_quote_index + 1:end_quote_index]
             _,options = rest[:start_quote_index].split(' ', 1)
             options = options.split()        
-            file_system.grep(file_path, pattern, not '-i' in options, '-w' in options, '-c' in options)
+            cnt = file_system.grep(file_path, pattern, not '-i' in options, '-w' in options, '-c' in options)
+            if '-c' in options: print(cnt)
 
         elif command=='clear':
             file_system.clear()
